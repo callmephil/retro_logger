@@ -9,6 +9,7 @@ enum Logger {
   error('31', Colors.red),
   success('32', Colors.green),
   info('33', Colors.yellow),
+  warning('34', Colors.orange),
   debug('36', Colors.blue);
 
   const Logger(this.code, this.color);
