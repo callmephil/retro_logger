@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:retro_logger/logger.dart';
+import 'package:retro_logger/retro_logger.dart';
 
 void main() {
   runApp(const MyApp());

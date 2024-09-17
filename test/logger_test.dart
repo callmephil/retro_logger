@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:retro_logger/logger.dart';
+import 'package:retro_logger/retro_logger.dart';
 
 void main() {
   group('LogManager', () {
