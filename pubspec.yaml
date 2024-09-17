@@ -1,9 +1,9 @@
 name: retro_logger
 description: "A simple Logger that does not have any dependencies and is easy to use."
 version: 0.0.1
-homepage: https://flutter-request-kit.web.app
-repository: https://github.com/callmephil/flutter_request_kit
-issue_tracker: https://github.com/callmephil/flutter_request_kit/issues
+homepage: https://retro-logger.web.app/
+repository: https://github.com/callmephil/retro_logger
+issue_tracker: https://github.com/callmephil/retro_logger/issues
 
 environment:
   sdk: ^3.5.2
