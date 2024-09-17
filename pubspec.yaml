@@ -1,0 +1,21 @@
+name: retro_logger
+description: "A simple Logger that does not have any dependencies and is easy to use."
+version: 0.0.1
+homepage: https://flutter-request-kit.web.app
+repository: https://github.com/callmephil/flutter_request_kit
+issue_tracker: https://github.com/callmephil/flutter_request_kit/issues
+
+environment:
+  sdk: ^3.5.2
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: any
+
+flutter:
