@@ -44,3 +44,8 @@ enum LogType {
 ## 0.0.6
 
 - Improved doc using ChatGPT
+
+## 0.0.7
+
+- added View by dropdown and implement a group view of logs based on their origin.
+- added analytics tab and basic pie chart from fl_chart

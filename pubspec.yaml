@@ -1,6 +1,6 @@
 name: retro_logger
 description: "A simple Logger that does not have any dependencies and is easy to use."
-version: 0.0.6
+version: 0.0.7
 homepage: https://retro-logger.web.app/
 repository: https://github.com/callmephil/retro_logger
 issue_tracker: https://github.com/callmephil/retro_logger/issues
@@ -12,6 +12,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  fl_chart: any
 
 dev_dependencies:
   flutter_test:

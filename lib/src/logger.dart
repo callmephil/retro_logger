@@ -90,6 +90,12 @@ enum Logger {
         .color;
   }
 
+  static Color getColorByType(LogType type) {
+    return Logger.values
+        .firstWhere((e) => e.type == type, orElse: () => Logger.info)
+        .color;
+  }
+
   /// Benchmarks the execution time of a synchronous function.
   ///
   /// [eval] is the function to be benchmarked.

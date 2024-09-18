@@ -85,7 +85,7 @@ class _LogScreenState extends State<LogScreen> {
         appBar: AppBar(
           title: const Text('Logs'),
         ),
-        body: const SafeArea(child: LogListWidget()),
+        body: const SafeArea(child: LogTabView()),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Logger.info.log(
