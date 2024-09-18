@@ -1,100 +1,215 @@
-# retro_logger
+# Retro Logger
 
-`retro_logger` is a simple Dart package that allows users to log messages and display logs with a prebuilt widget in a retro style. This package is designed to be easy to use and integrate into your Dart or Flutter applications.
+`retro_logger` is a lightweight Dart package that provides a retro-styled logging system for Dart and Flutter applications. It allows you to log messages with different levels and display them using a prebuilt widget, making debugging and monitoring easier and more visually appealing.
+
+## Table of Contents
+
+- [Retro Logger](#retro-logger)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Getting Started](#getting-started)
+    - [Installation](#installation)
+    - [Prerequisites](#prerequisites)
+  - [Usage](#usage)
+    - [Logging Messages](#logging-messages)
+    - [Displaying Logs](#displaying-logs)
+      - [Using `LogListWidget`](#using-loglistwidget)
+      - [Customizing with `LogManagerWidget`](#customizing-with-logmanagerwidget)
+      - [Accessing `LogManager` Instance](#accessing-logmanager-instance)
+    - [Filtering and Searching Logs](#filtering-and-searching-logs)
+    - [Benchmarking Functions](#benchmarking-functions)
+      - [Synchronous Functions](#synchronous-functions)
+      - [Asynchronous Functions](#asynchronous-functions)
+  - [Additional Information](#additional-information)
+  - [Contributing](#contributing)
+  - [Issues](#issues)
+  - [License](#license)
 
 ## Features
 
-- Log messages with different levels (info, warning, error)
-- Display logs in a retro-styled widget
-- Customizable log display settings
-- Lightweight and easy to integrate
+- **Multiple Log Levels**: Supports various log levels such as info, warning, error, success, network, UI, API, and more.
+- **Retro-Styled Widget**: Provides a prebuilt widget to display logs in a retro style.
+- **Filtering and Searching**: Easily filter logs by type and search by keywords.
+- **Benchmarking Utilities**: Includes utilities to benchmark synchronous and asynchronous functions.
+- **Lightweight**: Designed to be easy to integrate without adding significant overhead.
 
-## Getting started
-
-### Prerequisites
-
-- sdk: ^3.5.2
-- flutter: ">=1.17.0"
+## Getting Started
 
 ### Installation
 
 Add `retro_logger` to your `pubspec.yaml` file:
 
-Using pub add (recommended):
+Using **Flutter**:
 
-> flutter pub add retro_logger
+```bash
+flutter pub add retro_logger
+```
 
-or by editing pubspec.yaml
+Or manually add the dependency:
 
 ```yaml
 dependencies:
   retro_logger: ^0.0.1
 ```
 
-Then, run flutter pub get to install the package.
+Then, run:
 
-Usage
-Logging Messages
-To log messages and register message, import the retro_logger package and use the Logger class:
+```bash
+flutter pub get
+```
+
+### Prerequisites
+
+- Dart SDK: **^3.5.2**
+- Flutter: **>=1.17.0**
+
+## Usage
+
+### Logging Messages
+
+To log messages, import the `retro_logger` package and use the `Logger` class:
 
 ```dart
 import 'package:retro_logger/retro_logger.dart';
 
-
-Logger.success.log('This is a success message')
-Logger.info.log('This is an info message');
-Logger.warning.log('This is a warning message');
-Logger.error.log('This is an error message');
+void main() {
+  Logger.success.log('This is a success message', origin: 'Main');
+  Logger.info.log('This is an info message', origin: 'Main');
+  Logger.warning.log('This is a warning message', origin: 'Main');
+  Logger.error.log('This is an error message', origin: 'Main');
+}
 ```
 
-Displaying Logs:
-to use pre-designed listview you can use the [LogListWidget]
+- **Note**: The `origin` parameter is a string that identifies where the log is coming from, making it easier to trace logs.
+
+### Displaying Logs
+
+#### Using `LogListWidget`
+
+To display logs using the pre-designed list view, use the `LogListWidget`:
 
 ```dart
 import 'package:flutter/material.dart';
 import 'package:retro_logger/retro_logger.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Retro Logger Example',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Retro Logger Example'),
+          title: const Text('Retro Logger Example'),
         ),
-        body: Center(
-          child: LogListWidget(),
-        ),
+        body: const LogListWidget(),
       ),
     );
   }
 }
 ```
 
-You can also build your own widgets with the [LogManagerWidget]
+#### Customizing with `LogManagerWidget`
+
+If you want to build your own custom log display, you can use `LogManagerWidget`:
 
 ```dart
-LogManagerWidget(
-    builder: (_, logs) {
-      return YourCustomWidget();
-    },
-);
+import 'package:flutter/material.dart';
+import 'package:retro_logger/retro_logger.dart';
+
+class CustomLogWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return LogManagerWidget(
+      builder: (context, logs) {
+        return ListView.builder(
+          itemCount: logs.length,
+          itemBuilder: (context, index) {
+            final log = logs[index];
+            return ListTile(
+              title: Text(log.message),
+              subtitle: Text(log.origin),
+              leading: Icon(Icons.bug_report, color: Logger.getColor(log.level)),
+            );
+          },
+        );
+      },
+    );
+  }
+}
 ```
 
-You can fine control the logs list by accessing the [LogManager.instance]
+#### Accessing `LogManager` Instance
 
-Additional information
-For more information, visit the documentation.
+For advanced control over logs, you can directly interact with the `LogManager` singleton:
 
-Contributing
-Contributions are welcome! Please see the contributing guidelines for more information.
+```dart
+final LogManager logManager = LogManager.instance;
 
-Issues
-If you encounter any issues, please file them here. We aim to respond to issues within 48 hours.
+// Adding a log manually
+logManager.addLog(Log(
+  origin: 'CustomOrigin',
+  level: 'info',
+  message: 'This is a custom log message',
+  type: LogType.other,
+));
 
-License
-This package is licensed under the MIT License. See the LICENSE file for more information. ```
+// Clearing all logs
+logManager.clearLogs();
+
+// Filtering logs by type
+logManager.filterLogsByTypes({LogType.error, LogType.warning});
+
+// Searching logs
+logManager.searchLogs('search query');
+```
+
+### Filtering and Searching Logs
+
+The `LogListWidget` comes with built-in filtering and searching capabilities:
+
+- **Filtering by Log Type**: Click on the filter icon in the search bar to select log types to display.
+- **Searching by Keyword**: Type in the search bar to filter logs containing specific keywords.
+
+### Benchmarking Functions
+
+Use `Logger`'s benchmarking utilities to measure the execution time of functions:
+
+#### Synchronous Functions
+
+```dart
+Logger.info.benchmark(() {
+  // Your code here
+}, name: 'SyncFunction');
+```
+
+#### Asynchronous Functions
+
+```dart
+await Logger.info.benchmarkAsync(() async {
+  // Your async code here
+}, name: 'AsyncFunction');
+```
+
+- **Note**: The benchmark results will be logged with the `timestamp` log level.
+
+## Additional Information
+
+For more detailed documentation and examples, please refer to the [official documentation](#).
+
+## Contributing
+
+Contributions are welcome! Please see the [contributing guidelines](CONTRIBUTING.md) for more information.
+
+## Issues
+
+If you encounter any issues, please [file them here](https://github.com/yourusername/retro_logger/issues). We aim to respond to issues within 48 hours.
+
+## License
+
+This package is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.

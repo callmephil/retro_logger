@@ -40,3 +40,7 @@ enum LogType {
   > Logger.button.log('message', name: 'FloatingActionButton')
 
 - Improved search field to handle keywords matching and multi types.
+
+## 0.0.6
+
+- Improved doc using ChatGPT
