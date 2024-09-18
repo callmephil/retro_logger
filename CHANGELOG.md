@@ -13,3 +13,30 @@
 ## 0.0.4
 
 - Added documentation
+
+## 0.0.5
+
+- Added LogType and additional log options.
+
+```dart
+enum LogType {
+  network,
+  button,
+  database,
+  ui,
+  api,
+  other,
+  error,
+  warning,
+  success,
+  info,
+  fatal,
+  timestamp,
+}
+```
+
+- Added name to the log method to register the origin of the caller.
+
+  > Logger.button.log('message', name: 'FloatingActionButton')
+
+- Improved search field to handle keywords matching and multi types.

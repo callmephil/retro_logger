@@ -10,7 +10,9 @@ class LogManager {
   factory LogManager() => _instance;
 
   /// Private constructor to prevent external instantiation.
-  LogManager._internal();
+  LogManager._internal() {
+    _filteredLogsNotifier.value = List.unmodifiable(_logs);
+  }
 
   /// The singleton instance of [LogManager].
   static final LogManager _instance = LogManager._internal();
@@ -21,41 +23,78 @@ class LogManager {
   /// A list to store all log entries.
   final List<Log> _logs = [];
 
-  /// A [ValueNotifier] to notify listeners of search results.
-  final ValueNotifier<List<Log>> _searchResultsNotifier = ValueNotifier([]);
+  List<Log> get logs => List.unmodifiable(_logs);
+
+  /// A [ValueNotifier] to notify listeners of filtered log entries.
+  final ValueNotifier<List<Log>> _filteredLogsNotifier = ValueNotifier([]);
 
   /// A timer to handle debounced search functionality.
   Timer? _debounceTimer;
 
-  /// Getter to access the [ValueNotifier] for search results.
-  ValueNotifier<List<Log>> get searchResultsNotifier => _searchResultsNotifier;
+  /// A set to store the current log type filters.
+  Set<LogType> _currentLogTypes = {};
 
-  /// Getter to access an unmodifiable view of all logs.
-  List<Log> get logs => List.unmodifiable(_logs);
+  /// A string to store the current search query.
+  String _currentSearchQuery = '';
+
+  /// Getter to access the [ValueNotifier] for filtered logs.
+  ValueNotifier<List<Log>> get filteredLogsNotifier => _filteredLogsNotifier;
 
   /// Adds a new log entry to the list and updates the search results.
   ///
   /// [log] is the log entry to be added.
   void addLog(Log log) {
     _logs.add(log);
-    _searchResultsNotifier.value = List.unmodifiable(_logs);
+    _applyCurrentFilters();
   }
 
   /// Clears all log entries and updates the search results.
   void clearLogs() {
     _logs.clear();
-    _searchResultsNotifier.value = List.unmodifiable(_logs);
+    _filteredLogsNotifier.value = [];
   }
 
   /// Searches the logs based on the provided query and updates the search results.
   ///
   /// [query] is the search term used to filter the logs.
   void searchLogs(String query) {
-    final results = _logs.where((log) {
-      return log.message.toLowerCase().contains(query.toLowerCase()) ||
-          log.level.toLowerCase().contains(query.toLowerCase());
-    }).toList(growable: false);
-    _searchResultsNotifier.value = List.unmodifiable(results);
+    _currentSearchQuery = query;
+    _applyCurrentFilters();
+  }
+
+  /// Filters the logs based on the provided log types and updates the search results.
+  ///
+  /// [logTypes] is the set of log types used to filter the logs.
+  void filterLogsByTypes(Set<LogType> logTypes) {
+    _currentLogTypes = logTypes;
+    _applyCurrentFilters();
+  }
+
+  /// Applies the current filters to the log list and updates the filtered logs notifier.
+  void _applyCurrentFilters() {
+    List<Log> filteredLogs = _logs;
+
+    if (_currentLogTypes.isNotEmpty) {
+      filteredLogs = filteredLogs
+          .where((log) => _currentLogTypes.contains(log.type))
+          .toList(growable: false);
+    }
+
+    if (_currentSearchQuery.isNotEmpty) {
+      final searchWords = _currentSearchQuery.toLowerCase().split(' ');
+      filteredLogs = filteredLogs.where((log) {
+        final logFields = [
+          log.message.toLowerCase(),
+          log.level.toLowerCase(),
+          log.origin.toLowerCase(),
+          log.type.name.toLowerCase(),
+        ];
+        return searchWords
+            .any((word) => logFields.any((field) => field.contains(word)));
+      }).toList(growable: false);
+    }
+
+    _filteredLogsNotifier.value = List.unmodifiable(filteredLogs);
   }
 
   /// Performs a debounced search on the logs based on the provided query.

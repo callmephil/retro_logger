@@ -12,9 +12,11 @@ void main() {
 
     test('should add a log', () {
       final log = Log(
+        origin: 'test: should add a log',
         level: 'info',
         message: 'This is a test log',
         timestamp: DateTime.now(),
+        type: LogType.other,
       );
 
       logManager.addLog(log);
@@ -25,14 +27,18 @@ void main() {
 
     test('should retrieve logs', () {
       final log1 = Log(
+        origin: 'test: should retrieve logs',
         level: 'info',
         message: 'First log',
         timestamp: DateTime.now(),
+        type: LogType.other,
       );
       final log2 = Log(
+        origin: 'test: should retrieve logs',
         level: 'error',
         message: 'Second log',
         timestamp: DateTime.now(),
+        type: LogType.other,
       );
 
       logManager.addLog(log1);
@@ -45,9 +51,11 @@ void main() {
 
     test('should clear logs', () {
       final log = Log(
+        origin: 'test: should clear logs',
         level: 'info',
         message: 'This is a test log',
         timestamp: DateTime.now(),
+        type: LogType.other,
       );
 
       logManager.addLog(log);

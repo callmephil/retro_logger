@@ -10,7 +10,7 @@ class LogManagerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: LogManager.instance.searchResultsNotifier,
+      valueListenable: LogManager.instance.filteredLogsNotifier,
       builder: (BuildContext ctx, List<Log> logs, __) {
         return builder(ctx, logs);
       },
