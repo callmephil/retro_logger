@@ -1,3 +1,7 @@
 ## 0.0.1
 
-* TODO: Describe initial release.
+- Implement Logger initial code
+
+## 0.0.2
+
+- Implement benchmark logging for timing methods logs

@@ -1,6 +1,7 @@
 import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
+import 'package:retro_logger/src/utils/stop_watch_utils.dart';
 
 import 'log.dart';
 import 'log_manager.dart';
@@ -33,5 +34,22 @@ enum Logger {
     return Logger.values
         .firstWhere((e) => e.name == level, orElse: () => Logger.info)
         .color;
+  }
+
+  void benchmark(void Function() eval, {String name = ''}) {
+    StopWatchUtils.benchmark(
+      eval,
+      elapsedTime: (value) => log('execution time for $name is $value'),
+    );
+  }
+
+  Future<void> benchmarkAsync(
+    Future<void> Function() eval, {
+    String name = '',
+  }) async {
+    await StopWatchUtils.benchmarkAsync(
+      eval,
+      elapsedTime: (value) => log('execution time for $name is $value'),
+    );
   }
 }
