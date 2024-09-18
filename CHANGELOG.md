@@ -9,3 +9,7 @@
 ## 0.0.3
 
 - Implement search field and refactor log_manager to handle search
+
+## 0.0.4
+
+- Added documentation
