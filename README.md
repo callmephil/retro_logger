@@ -12,6 +12,7 @@ This package is in early stage development and might introduce breaking changes.
 - [Retro Logger](#retro-logger)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
+  - [DEMO](#demo)
   - [Getting Started](#getting-started)
     - [Installation](#installation)
     - [Prerequisites](#prerequisites)
@@ -37,6 +38,15 @@ This package is in early stage development and might introduce breaking changes.
 - **Filtering and Searching**: Easily filter logs by type and search by keywords.
 - **Benchmarking Utilities**: Includes utilities to benchmark synchronous and asynchronous functions.
 - **Lightweight**: Designed to be easy to integrate without adding significant overhead.
+
+## DEMO
+
+Live: https://retro-logger.web.app/
+
+<video width="600" controls>
+  <source src="assets/demo.mov" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ## Getting Started
 
