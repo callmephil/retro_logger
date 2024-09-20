@@ -1,9 +1,14 @@
+# 🚧 WARNING DEVELOPMENT IN PROGRESS 🚧
+
+This package is in early stage development and might introduce breaking changes.
+
 # Retro Logger
 
 `retro_logger` is a lightweight Dart package that provides a retro-styled logging system for Dart and Flutter applications. It allows you to log messages with different levels and display them using a prebuilt widget, making debugging and monitoring easier and more visually appealing.
 
 ## Table of Contents
 
+- [🚧 WARNING DEVELOPMENT IN PROGRESS 🚧](#-warning-development-in-progress-)
 - [Retro Logger](#retro-logger)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
@@ -73,10 +78,10 @@ To log messages, import the `retro_logger` package and use the `Logger` class:
 import 'package:retro_logger/retro_logger.dart';
 
 void main() {
-  Logger.success.log('This is a success message', origin: 'Main');
-  Logger.info.log('This is an info message', origin: 'Main');
-  Logger.warning.log('This is a warning message', origin: 'Main');
-  Logger.error.log('This is an error message', origin: 'Main');
+  Logger.success('This is a success message', origin: 'Main');
+  Logger.info('This is an info message', origin: 'Main');
+  Logger.warning('This is a warning message', origin: 'Main');
+  Logger.error('This is an error message', origin: 'Main');
 }
 ```
 
@@ -183,17 +188,27 @@ Use `Logger`'s benchmarking utilities to measure the execution time of functions
 #### Synchronous Functions
 
 ```dart
-Logger.info.benchmark(() {
-  // Your code here
-}, name: 'SyncFunction');
+  Logger.benchmark(()  {
+    // your code here
+  }, (String elapsedTime) {
+    Logger.timestamp(
+      'Benchmark completed in $elapsedTime',
+      origin: '_simulateLogs',
+    );
+  });
 ```
 
 #### Asynchronous Functions
 
 ```dart
-await Logger.info.benchmarkAsync(() async {
-  // Your async code here
-}, name: 'AsyncFunction');
+  await Logger.benchmarkAsync(() async {
+    // your code here
+  }, (String elapsedTime) {
+    Logger.timestamp(
+      'Benchmark completed in $elapsedTime',
+      origin: '_simulateLogs',
+    );
+  });
 ```
 
 - **Note**: The benchmark results will be logged with the `timestamp` log level.

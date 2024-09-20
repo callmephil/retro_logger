@@ -39,21 +39,17 @@ class _LogScreenState extends State<LogScreen> {
   Future<void> _simulateLogs() async {
     // List of log types and corresponding messages
     final logMessages = [
-      () =>
-          Logger.network.log('This is a network log', origin: '_simulateLogs'),
-      () => Logger.button.log('This is a button log', origin: '_simulateLogs'),
-      () => Logger.database
-          .log('This is a database log', origin: '_simulateLogs'),
-      () => Logger.ui.log('This is a UI log', origin: '_simulateLogs'),
-      () => Logger.api.log('This is an API log', origin: '_simulateLogs'),
-      () => Logger.other.log('This is an other log', origin: '_simulateLogs'),
-      () => Logger.error.log('This is an error log', origin: '_simulateLogs'),
-      () =>
-          Logger.warning.log('This is a warning log', origin: '_simulateLogs'),
-      () =>
-          Logger.success.log('This is a success log', origin: '_simulateLogs'),
-      () => Logger.info.log('This is an info log', origin: '_simulateLogs'),
-      () => Logger.fatal.log('This is a fatal log', origin: '_simulateLogs'),
+      () => Logger.network('This is a network log', origin: '_simulateLogs'),
+      () => Logger.button('This is a button log', origin: '_simulateLogs'),
+      () => Logger.database('This is a database log', origin: '_simulateLogs'),
+      () => Logger.ui('This is a UI log', origin: '_simulateLogs'),
+      () => Logger.api('This is an API log', origin: '_simulateLogs'),
+      () => Logger.other('This is an other log', origin: '_simulateLogs'),
+      () => Logger.error('This is an error log', origin: '_simulateLogs'),
+      () => Logger.warning('This is a warning log', origin: '_simulateLogs'),
+      () => Logger.success('This is a success log', origin: '_simulateLogs'),
+      () => Logger.info('This is an info log', origin: '_simulateLogs'),
+      () => Logger.fatal('This is a fatal log', origin: '_simulateLogs'),
       () async => _benchmarkedLog(),
     ];
 
@@ -65,7 +61,7 @@ class _LogScreenState extends State<LogScreen> {
   }
 
   Future<void> _benchmarkedLog() async {
-    return Logger.timestamp.benchmarkAsync(() async {
+    Logger.benchmarkAsync(() async {
       await Future.delayed(const Duration(milliseconds: 500), () {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
@@ -74,7 +70,12 @@ class _LogScreenState extends State<LogScreen> {
           ),
         );
       });
-    }, name: '_benchmarkedLog');
+    }, (String elapsedTime) {
+      Logger.timestamp(
+        'Benchmark completed in $elapsedTime',
+        origin: '_simulateLogs',
+      );
+    });
   }
 
   @override
@@ -88,7 +89,7 @@ class _LogScreenState extends State<LogScreen> {
         body: const SafeArea(child: LogTabView()),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Logger.info.log(
+            Logger.info(
               [
                 'This is an info log',
                 'with multiple lines',

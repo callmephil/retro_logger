@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:retro_logger/retro_logger.dart';
 
+// ignore: prefer-match-file-name
 enum LogViewType {
   groupByOrigin,
   ascendingTime,

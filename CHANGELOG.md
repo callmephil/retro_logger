@@ -49,3 +49,9 @@ enum LogType {
 
 - added View by dropdown and implement a group view of logs based on their origin.
 - added analytics tab and basic pie chart from fl_chart
+
+## 0.0.8
+
+- Update time format in LoggerTimeExtension to include seconds and ms
+- _(Breaking Changes)_ Simplified Log writing
+  > Logger.button('message', origin: 'FloatingActionButton')
