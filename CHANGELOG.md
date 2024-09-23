@@ -55,3 +55,8 @@ enum LogType {
 - Update time format in LoggerTimeExtension to include seconds and ms
 - _(Breaking Changes)_ Simplified Log writing
   > Logger.button('message', origin: 'FloatingActionButton')
+
+## 0.0.9
+
+- Added linting to the example file
+- Refactored logger class to use static methods instead of factory.

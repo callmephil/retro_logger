@@ -26,11 +26,6 @@ analyzer:
 
 linter:
   rules:
-    public_member_api_docs: false
-    sort_pub_dependencies: false
-    avoid_positional_boolean_parameters: false
-    flutter_style_todos: false
-    always_put_required_named_parameters_first: false
 
 # Learn more: https://dcm.dev/docs/individuals/configuration
 dart_code_metrics:

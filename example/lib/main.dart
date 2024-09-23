@@ -1,3 +1,5 @@
+// ignore_for_file: prefer-single-widget-per-file, prefer-match-file-name
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -14,9 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
       home: const LogScreen(),
     );
   }
@@ -50,32 +50,34 @@ class _LogScreenState extends State<LogScreen> {
       () => Logger.success('This is a success log', origin: '_simulateLogs'),
       () => Logger.info('This is an info log', origin: '_simulateLogs'),
       () => Logger.fatal('This is a fatal log', origin: '_simulateLogs'),
-      () async => _benchmarkedLog(),
+      () => _benchmarkedLog(),
     ];
 
     // Loop over the log messages
     for (var logMessage in logMessages) {
-      await Future.delayed(const Duration(milliseconds: 100));
-      logMessage();
+      await Future.delayed(const Duration(milliseconds: 100), () {
+        logMessage();
+      });
     }
   }
 
-  Future<void> _benchmarkedLog() async {
-    Logger.benchmarkAsync(() async {
-      await Future.delayed(const Duration(milliseconds: 500), () {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Benchmark completed'),
-          ),
+  void _benchmarkedLog() {
+    Logger.benchmarkAsync(
+      () async {
+        await Future.delayed(const Duration(milliseconds: 500), () {
+          if (!mounted) return;
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Benchmark completed')),
+          );
+        });
+      },
+      (String elapsedTime) {
+        Logger.timestamp(
+          'Benchmark completed in $elapsedTime',
+          origin: '_simulateLogs',
         );
-      });
-    }, (String elapsedTime) {
-      Logger.timestamp(
-        'Benchmark completed in $elapsedTime',
-        origin: '_simulateLogs',
-      );
-    });
+      },
+    );
   }
 
   @override
@@ -83,9 +85,7 @@ class _LogScreenState extends State<LogScreen> {
     return Theme(
       data: ThemeData.dark(),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Logs'),
-        ),
+        appBar: AppBar(title: const Text('Logs')),
         body: const SafeArea(child: LogTabView()),
         floatingActionButton: FloatingActionButton(
           onPressed: () {

@@ -13,55 +13,55 @@ class Logger {
 
   const Logger._(this.level);
 
-  factory Logger.error(Object? message, {required String origin}) {
-    return Logger._log(LogLevel.error, message, origin);
+  static Logger error(Object? message, {required String origin}) {
+    return _log(LogLevel.error, message, origin);
   }
 
-  factory Logger.success(Object? message, {required String origin}) {
-    return Logger._log(LogLevel.success, message, origin);
+  static Logger success(Object? message, {required String origin}) {
+    return _log(LogLevel.success, message, origin);
   }
 
-  factory Logger.info(Object? message, {required String origin}) {
-    return Logger._log(LogLevel.info, message, origin);
+  static Logger info(Object? message, {required String origin}) {
+    return _log(LogLevel.info, message, origin);
   }
 
-  factory Logger.warning(Object? message, {required String origin}) {
-    return Logger._log(LogLevel.warning, message, origin);
+  static Logger warning(Object? message, {required String origin}) {
+    return _log(LogLevel.warning, message, origin);
   }
 
-  factory Logger.fatal(Object? message, {required String origin}) {
-    return Logger._log(LogLevel.fatal, message, origin);
+  static Logger fatal(Object? message, {required String origin}) {
+    return _log(LogLevel.fatal, message, origin);
   }
 
-  factory Logger.network(Object? message, {required String origin}) {
-    return Logger._log(LogLevel.network, message, origin);
+  static Logger network(Object? message, {required String origin}) {
+    return _log(LogLevel.network, message, origin);
   }
 
-  factory Logger.button(Object? message, {required String origin}) {
-    return Logger._log(LogLevel.button, message, origin);
+  static Logger button(Object? message, {required String origin}) {
+    return _log(LogLevel.button, message, origin);
   }
 
-  factory Logger.database(Object? message, {required String origin}) {
-    return Logger._log(LogLevel.database, message, origin);
+  static Logger database(Object? message, {required String origin}) {
+    return _log(LogLevel.database, message, origin);
   }
 
-  factory Logger.ui(Object? message, {required String origin}) {
-    return Logger._log(LogLevel.ui, message, origin);
+  static Logger ui(Object? message, {required String origin}) {
+    return _log(LogLevel.ui, message, origin);
   }
 
-  factory Logger.api(Object? message, {required String origin}) {
-    return Logger._log(LogLevel.api, message, origin);
+  static Logger api(Object? message, {required String origin}) {
+    return _log(LogLevel.api, message, origin);
   }
 
-  factory Logger.other(Object? message, {required String origin}) {
-    return Logger._log(LogLevel.other, message, origin);
+  static Logger other(Object? message, {required String origin}) {
+    return _log(LogLevel.other, message, origin);
   }
 
-  factory Logger.timestamp(Object? message, {required String origin}) {
-    return Logger._log(LogLevel.timestamp, message, origin);
+  static Logger timestamp(Object? message, {required String origin}) {
+    return _log(LogLevel.timestamp, message, origin);
   }
 
-  factory Logger.benchmark(
+  static Logger benchmark(
     void Function() eval,
     void Function(String) logCallback,
   ) {
@@ -69,7 +69,7 @@ class Logger {
     return const Logger._(LogLevel.timestamp);
   }
 
-  factory Logger.benchmarkAsync(
+  static Logger benchmarkAsync(
     Future<void> Function() eval,
     void Function(String) logCallback,
   ) {
