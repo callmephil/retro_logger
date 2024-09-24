@@ -35,7 +35,7 @@ enum LogType {
 }
 ```
 
-- Added name to the log method to register the origin of the caller.
+- Added name to the log method to register the name of the caller.
 
   > Logger.button.log('message', name: 'FloatingActionButton')
 
@@ -47,16 +47,20 @@ enum LogType {
 
 ## 0.0.7
 
-- added View by dropdown and implement a group view of logs based on their origin.
+- added View by dropdown and implement a group view of logs based on their name.
 - added analytics tab and basic pie chart from fl_chart
 
 ## 0.0.8
 
 - Update time format in LoggerTimeExtension to include seconds and ms
 - _(Breaking Changes)_ Simplified Log writing
-  > Logger.button('message', origin: 'FloatingActionButton')
+  > Logger.button('message', name: 'FloatingActionButton')
 
 ## 0.0.9
 
 - Added linting to the example file
 - Refactored logger class to use static methods instead of factory.
+
+## 0.0.10
+
+- name is now non mandatory and will display unknown if not passed.

@@ -39,17 +39,17 @@ class _LogScreenState extends State<LogScreen> {
   Future<void> _simulateLogs() async {
     // List of log types and corresponding messages
     final logMessages = [
-      () => Logger.network('This is a network log', origin: '_simulateLogs'),
-      () => Logger.button('This is a button log', origin: '_simulateLogs'),
-      () => Logger.database('This is a database log', origin: '_simulateLogs'),
-      () => Logger.ui('This is a UI log', origin: '_simulateLogs'),
-      () => Logger.api('This is an API log', origin: '_simulateLogs'),
-      () => Logger.other('This is an other log', origin: '_simulateLogs'),
-      () => Logger.error('This is an error log', origin: '_simulateLogs'),
-      () => Logger.warning('This is a warning log', origin: '_simulateLogs'),
-      () => Logger.success('This is a success log', origin: '_simulateLogs'),
-      () => Logger.info('This is an info log', origin: '_simulateLogs'),
-      () => Logger.fatal('This is a fatal log', origin: '_simulateLogs'),
+      () => Logger.network('This is a network log', name: '_simulateLogs'),
+      () => Logger.button('This is a button log', name: '_simulateLogs'),
+      () => Logger.database('This is a database log', name: '_simulateLogs'),
+      () => Logger.ui('This is a UI log', name: '_simulateLogs'),
+      () => Logger.api('This is an API log', name: '_simulateLogs'),
+      () => Logger.other('This is an other log', name: '_simulateLogs'),
+      () => Logger.error('This is an error log', name: '_simulateLogs'),
+      () => Logger.warning('This is a warning log', name: '_simulateLogs'),
+      () => Logger.success('This is a success log', name: '_simulateLogs'),
+      () => Logger.info('This is an info log', name: '_simulateLogs'),
+      () => Logger.fatal('This is a fatal log', name: '_simulateLogs'),
       () => _benchmarkedLog(),
     ];
 
@@ -74,7 +74,7 @@ class _LogScreenState extends State<LogScreen> {
       (String elapsedTime) {
         Logger.timestamp(
           'Benchmark completed in $elapsedTime',
-          origin: '_simulateLogs',
+          name: '_simulateLogs',
         );
       },
     );
@@ -96,7 +96,7 @@ class _LogScreenState extends State<LogScreen> {
                 'and json data\n\n'
                     '{"key": "value", "list": [1, 2, 3], "nested": {"key": "value"}, "bool": true}, "null": null',
               ],
-              origin: 'FloatingActionButton',
+              name: 'FloatingActionButton',
             );
           },
           child: const Icon(Icons.add),

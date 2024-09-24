@@ -34,7 +34,7 @@ class LogItemWidget extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      '${log.level} (${log.origin})'.toUpperCase(),
+                      '${log.level} (${log.name})'.toUpperCase(),
                       style: Theme.of(context).textTheme.labelMedium?.copyWith(
                             color: color,
                             fontWeight: FontWeight.bold,

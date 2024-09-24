@@ -86,7 +86,7 @@ class LogManager {
         final logFields = [
           log.message.toLowerCase(),
           log.level.toLowerCase(),
-          log.origin.toLowerCase(),
+          log.name.toLowerCase(),
           log.type.name.toLowerCase(),
         ];
         return searchWords

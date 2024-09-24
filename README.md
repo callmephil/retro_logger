@@ -88,14 +88,14 @@ To log messages, import the `retro_logger` package and use the `Logger` class:
 import 'package:retro_logger/retro_logger.dart';
 
 void main() {
-  Logger.success('This is a success message', origin: 'Main');
-  Logger.info('This is an info message', origin: 'Main');
-  Logger.warning('This is a warning message', origin: 'Main');
-  Logger.error('This is an error message', origin: 'Main');
+  Logger.success('This is a success message', name: 'Main');
+  Logger.info('This is an info message', name: 'Main');
+  Logger.warning('This is a warning message', name: 'Main');
+  Logger.error('This is an error message', name: 'Main');
 }
 ```
 
-- **Note**: The `origin` parameter is a string that identifies where the log is coming from, making it easier to trace logs.
+- **Note**: The `name` parameter is a string that identifies where the log is coming from, making it easier to trace logs.
 
 ### Displaying Logs
 
@@ -148,7 +148,7 @@ class CustomLogWidget extends StatelessWidget {
             final log = logs[index];
             return ListTile(
               title: Text(log.message),
-              subtitle: Text(log.origin),
+              subtitle: Text(log.name),
               leading: Icon(Icons.bug_report, color: Logger.getColor(log.level)),
             );
           },
@@ -168,7 +168,7 @@ final LogManager logManager = LogManager.instance;
 
 // Adding a log manually
 logManager.addLog(Log(
-  origin: 'CustomOrigin',
+  name: 'CustomName',
   level: 'info',
   message: 'This is a custom log message',
   type: LogType.other,
@@ -203,7 +203,7 @@ Use `Logger`'s benchmarking utilities to measure the execution time of functions
   }, (String elapsedTime) {
     Logger.timestamp(
       'Benchmark completed in $elapsedTime',
-      origin: '_simulateLogs',
+      name: '_simulateLogs',
     );
   });
 ```
@@ -216,7 +216,7 @@ Use `Logger`'s benchmarking utilities to measure the execution time of functions
   }, (String elapsedTime) {
     Logger.timestamp(
       'Benchmark completed in $elapsedTime',
-      origin: '_simulateLogs',
+      name: '_simulateLogs',
     );
   });
 ```

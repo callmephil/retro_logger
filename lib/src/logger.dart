@@ -13,52 +13,52 @@ class Logger {
 
   const Logger._(this.level);
 
-  static Logger error(Object? message, {required String origin}) {
-    return _log(LogLevel.error, message, origin);
+  static Logger error(Object? message, {String name = 'unknown'}) {
+    return _log(LogLevel.error, message, name);
   }
 
-  static Logger success(Object? message, {required String origin}) {
-    return _log(LogLevel.success, message, origin);
+  static Logger success(Object? message, {String name = 'unknown'}) {
+    return _log(LogLevel.success, message, name);
   }
 
-  static Logger info(Object? message, {required String origin}) {
-    return _log(LogLevel.info, message, origin);
+  static Logger info(Object? message, {String name = 'unknown'}) {
+    return _log(LogLevel.info, message, name);
   }
 
-  static Logger warning(Object? message, {required String origin}) {
-    return _log(LogLevel.warning, message, origin);
+  static Logger warning(Object? message, {String name = 'unknown'}) {
+    return _log(LogLevel.warning, message, name);
   }
 
-  static Logger fatal(Object? message, {required String origin}) {
-    return _log(LogLevel.fatal, message, origin);
+  static Logger fatal(Object? message, {String name = 'unknown'}) {
+    return _log(LogLevel.fatal, message, name);
   }
 
-  static Logger network(Object? message, {required String origin}) {
-    return _log(LogLevel.network, message, origin);
+  static Logger network(Object? message, {String name = 'unknown'}) {
+    return _log(LogLevel.network, message, name);
   }
 
-  static Logger button(Object? message, {required String origin}) {
-    return _log(LogLevel.button, message, origin);
+  static Logger button(Object? message, {String name = 'unknown'}) {
+    return _log(LogLevel.button, message, name);
   }
 
-  static Logger database(Object? message, {required String origin}) {
-    return _log(LogLevel.database, message, origin);
+  static Logger database(Object? message, {String name = 'unknown'}) {
+    return _log(LogLevel.database, message, name);
   }
 
-  static Logger ui(Object? message, {required String origin}) {
-    return _log(LogLevel.ui, message, origin);
+  static Logger ui(Object? message, {String name = 'unknown'}) {
+    return _log(LogLevel.ui, message, name);
   }
 
-  static Logger api(Object? message, {required String origin}) {
-    return _log(LogLevel.api, message, origin);
+  static Logger api(Object? message, {String name = 'unknown'}) {
+    return _log(LogLevel.api, message, name);
   }
 
-  static Logger other(Object? message, {required String origin}) {
-    return _log(LogLevel.other, message, origin);
+  static Logger other(Object? message, {String name = 'unknown'}) {
+    return _log(LogLevel.other, message, name);
   }
 
-  static Logger timestamp(Object? message, {required String origin}) {
-    return _log(LogLevel.timestamp, message, origin);
+  static Logger timestamp(Object? message, {String name = 'unknown'}) {
+    return _log(LogLevel.timestamp, message, name);
   }
 
   static Logger benchmark(
@@ -77,16 +77,16 @@ class Logger {
     return const Logger._(LogLevel.timestamp);
   }
 
-  static Logger _log(LogLevel level, Object? message, String origin) {
+  static Logger _log(LogLevel level, Object? message, String name) {
     if (kDebugMode) {
       final logMessage =
           'Logger.${level.name}: \x1B[${level.ansiCode}m${message ?? ''}\x1B[0m';
-      developer.log(logMessage, name: origin);
+      developer.log(logMessage, name: name);
     }
 
     final logEntry = Log(
       level: level.name,
-      origin: origin,
+      name: name,
       message: message?.toString() ?? '',
       type: level.type,
     );

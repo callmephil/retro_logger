@@ -5,7 +5,7 @@ import 'package:retro_logger/retro_logger.dart';
 
 // ignore: prefer-match-file-name
 enum LogViewType {
-  groupByOrigin,
+  groupByName,
   ascendingTime,
   descendingTime,
 }
@@ -49,8 +49,8 @@ class _LogListWidgetState extends State<LogListWidget> {
   List<Log> _getSortedLogs(List<Log> logs) {
     final modifiableLogs = List<Log>.of(logs);
     switch (_selectedViewType) {
-      case LogViewType.groupByOrigin:
-        // Group logs by origin
+      case LogViewType.groupByName:
+        // Group logs by name
         break;
       case LogViewType.ascendingTime:
         modifiableLogs.sort((a, b) => a.timestamp.compareTo(b.timestamp));
@@ -62,12 +62,12 @@ class _LogListWidgetState extends State<LogListWidget> {
     return modifiableLogs;
   }
 
-  Map<String, Map<LogType, List<Log>>> _groupLogsByOrigin(List<Log> logs) {
+  Map<String, Map<LogType, List<Log>>> _groupLogsByName(List<Log> logs) {
     final Map<String, Map<LogType, List<Log>>> groupedLogs = {};
     for (var log in logs) {
-      groupedLogs.putIfAbsent(log.origin, () => {});
-      groupedLogs[log.origin]!.putIfAbsent(log.type, () => []);
-      groupedLogs[log.origin]![log.type]!.add(log);
+      groupedLogs.putIfAbsent(log.name, () => {});
+      groupedLogs[log.name]!.putIfAbsent(log.type, () => []);
+      groupedLogs[log.name]![log.type]!.add(log);
     }
     return groupedLogs;
   }
@@ -105,7 +105,7 @@ class _LogListWidgetState extends State<LogListWidget> {
                         }).toList(growable: false);
                       },
                     ),
-                    labelText: 'Search by keywords, origin, or type',
+                    labelText: 'Search by keywords, name, or type',
                     border: const OutlineInputBorder(),
                   ),
                   onChanged: (query) {
@@ -141,18 +141,18 @@ class _LogListWidgetState extends State<LogListWidget> {
         Expanded(
           child: LogManagerWidget(
             builder: (_, logs) {
-              if (_selectedViewType == LogViewType.groupByOrigin) {
-                final groupedLogs = _groupLogsByOrigin(logs);
+              if (_selectedViewType == LogViewType.groupByName) {
+                final groupedLogs = _groupLogsByName(logs);
                 return ListView(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                   children: groupedLogs.entries.expand((entry) {
-                    final origin = entry.key;
+                    final name = entry.key;
                     return entry.value.entries.map((typeEntry) {
                       final type = typeEntry.key;
                       final logEntries = typeEntry.value;
                       return ExpandableLogGroup(
-                        origin: origin,
+                        name: name,
                         type: type,
                         logs: logEntries,
                       );
@@ -180,12 +180,12 @@ class _LogListWidgetState extends State<LogListWidget> {
 }
 
 class ExpandableLogGroup extends StatefulWidget {
-  final String origin;
+  final String name;
   final LogType type;
   final List<Log> logs;
 
   const ExpandableLogGroup({
-    required this.origin,
+    required this.name,
     required this.type,
     required this.logs,
     super.key,
@@ -211,7 +211,7 @@ class _ExpandableLogGroupState extends State<ExpandableLogGroup> {
         ),
         child: ExpansionTile(
           title: Text(
-            '${widget.type.name} ${widget.origin} (${widget.logs.length})'
+            '${widget.type.name} ${widget.name} (${widget.logs.length})'
                 .toUpperCase(),
             style: TextStyle(fontWeight: FontWeight.bold, color: color),
           ),
