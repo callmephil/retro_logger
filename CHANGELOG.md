@@ -64,3 +64,8 @@ enum LogType {
 ## 0.0.10
 
 - name is now non mandatory and will display unknown if not passed.
+
+## 0.0.11
+
+- Upgrade to flutter (3.47.2)
+- Removed fl_chart dependency.
