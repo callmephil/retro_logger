@@ -1,14 +1,12 @@
+// ignore_for_file: prefer-single-widget-per-file
+
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:retro_logger/retro_logger.dart';
 
 // ignore: prefer-match-file-name
-enum LogViewType {
-  groupByName,
-  ascendingTime,
-  descendingTime,
-}
+enum LogViewType { groupByName, ascendingTime, descendingTime }
 
 class LogListWidget extends StatefulWidget {
   const LogListWidget({super.key});
@@ -19,9 +17,9 @@ class LogListWidget extends StatefulWidget {
 
 class _LogListWidgetState extends State<LogListWidget> {
   final TextEditingController _controller = TextEditingController();
-  final LogManager _logManager = LogManager.instance;
+  final LogManager _logManager = .instance;
   final Set<LogType> _selectedLogTypes = {};
-  LogViewType _selectedViewType = LogViewType.ascendingTime;
+  LogViewType _selectedViewType = .ascendingTime;
 
   @override
   void dispose() {
@@ -47,15 +45,15 @@ class _LogListWidgetState extends State<LogListWidget> {
   }
 
   List<Log> _getSortedLogs(List<Log> logs) {
-    final modifiableLogs = List<Log>.of(logs);
+    final modifiableLogs = List.of(logs);
     switch (_selectedViewType) {
-      case LogViewType.groupByName:
+      case .groupByName:
         // Group logs by name
         break;
-      case LogViewType.ascendingTime:
+      case .ascendingTime:
         modifiableLogs.sort((a, b) => a.timestamp.compareTo(b.timestamp));
         break;
-      case LogViewType.descendingTime:
+      case .descendingTime:
         modifiableLogs.sort((a, b) => b.timestamp.compareTo(a.timestamp));
         break;
     }
@@ -79,6 +77,7 @@ class _LogListWidgetState extends State<LogListWidget> {
         Padding(
           padding: const EdgeInsets.all(24.0).copyWith(bottom: 4),
           child: Row(
+            spacing: 16,
             children: [
               Expanded(
                 child: TextField(
@@ -86,23 +85,26 @@ class _LogListWidgetState extends State<LogListWidget> {
                   decoration: InputDecoration(
                     suffixIcon: PopupMenuButton<LogType>(
                       icon: const Row(
-                        mainAxisSize: MainAxisSize.min,
+                        mainAxisSize: .min,
                         children: [
                           Icon(Icons.filter_list),
-                          SizedBox(width: 4),
-                          Text('Filters'),
-                          SizedBox(width: 4),
+                          Padding(
+                            padding: .symmetric(horizontal: 4.0),
+                            child: Text('Filters'),
+                          ),
                         ],
                       ),
                       onSelected: _onSelectedLogType,
                       itemBuilder: (BuildContext _) {
-                        return LogType.values.map((LogType logType) {
-                          return CheckedPopupMenuItem<LogType>(
-                            value: logType,
-                            checked: _selectedLogTypes.contains(logType),
-                            child: Text(logType.name),
-                          );
-                        }).toList(growable: false);
+                        return LogType.values
+                            .map((LogType logType) {
+                              return CheckedPopupMenuItem(
+                                value: logType,
+                                checked: _selectedLogTypes.contains(logType),
+                                child: Text(logType.name),
+                              );
+                            })
+                            .toList(growable: false);
                       },
                     ),
                     labelText: 'Search by keywords, name, or type',
@@ -113,11 +115,10 @@ class _LogListWidgetState extends State<LogListWidget> {
                   },
                 ),
               ),
-              const SizedBox(width: 16),
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 200),
                 child: DropdownButtonFormField<LogViewType>(
-                  value: _selectedViewType,
+                  initialValue: _selectedViewType,
                   decoration: const InputDecoration(
                     labelText: 'View by',
                     border: OutlineInputBorder(),
@@ -127,12 +128,14 @@ class _LogListWidgetState extends State<LogListWidget> {
                       _onSelectedViewType(newValue);
                     }
                   },
-                  items: LogViewType.values.map((LogViewType viewType) {
-                    return DropdownMenuItem<LogViewType>(
-                      value: viewType,
-                      child: Text(viewType.name),
-                    );
-                  }).toList(growable: false),
+                  items: LogViewType.values
+                      .map((LogViewType viewType) {
+                        return DropdownMenuItem(
+                          value: viewType,
+                          child: Text(viewType.name),
+                        );
+                      })
+                      .toList(growable: false),
                 ),
               ),
             ],
@@ -141,32 +144,34 @@ class _LogListWidgetState extends State<LogListWidget> {
         Expanded(
           child: LogManagerWidget(
             builder: (_, logs) {
-              if (_selectedViewType == LogViewType.groupByName) {
+              if (_selectedViewType == .groupByName) {
                 final groupedLogs = _groupLogsByName(logs);
                 return ListView(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                  children: groupedLogs.entries.expand((entry) {
-                    final name = entry.key;
-                    return entry.value.entries.map((typeEntry) {
-                      final type = typeEntry.key;
-                      final logEntries = typeEntry.value;
-                      return ExpandableLogGroup(
-                        name: name,
-                        type: type,
-                        logs: logEntries,
-                      );
-                    }).toList(growable: false);
-                  }).toList(growable: false),
+                  padding: const .symmetric(horizontal: 24, vertical: 16),
+                  children: groupedLogs.entries
+                      .expand((entry) {
+                        final name = entry.key;
+                        return entry.value.entries
+                            .map((typeEntry) {
+                              final type = typeEntry.key;
+                              final logEntries = typeEntry.value;
+                              return ExpandableLogGroup(
+                                name: name,
+                                type: type,
+                                logs: logEntries,
+                              );
+                            })
+                            .toList(growable: false);
+                      })
+                      .toList(growable: false),
                 );
               }
               final sortedLogs = _getSortedLogs(logs);
               return ListView.separated(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                padding: const .symmetric(horizontal: 24, vertical: 16),
                 itemCount: sortedLogs.length,
-                separatorBuilder: (_, __) => const SizedBox(height: 16),
-                itemBuilder: (__, index) {
+                separatorBuilder: (_, _) => const SizedBox(height: 16),
+                itemBuilder: (_, index) {
                   final log = sortedLogs[index];
                   return LogItemWidget(log: log);
                 },
@@ -204,23 +209,24 @@ class _ExpandableLogGroupState extends State<ExpandableLogGroup> {
 
     return Material(
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        margin: const .symmetric(vertical: 8.0, horizontal: 16.0),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0),
-          border: Border.all(color: Logger.getColorByType(widget.type)),
+          borderRadius: .circular(8.0),
+          border: .all(color: Logger.getColorByType(widget.type)),
         ),
         child: ExpansionTile(
           title: Text(
             '${widget.type.name} ${widget.name} (${widget.logs.length})'
                 .toUpperCase(),
-            style: TextStyle(fontWeight: FontWeight.bold, color: color),
+            style: TextStyle(fontWeight: .bold, color: color),
           ),
           trailing: IconButton(
             icon: Icon(Icons.copy_all_rounded, color: color),
             onPressed: () {
               // Copy the logs to clipboard
-              final logMessages =
-                  widget.logs.map((log) => log.message).join('\n');
+              final logMessages = widget.logs
+                  .map((log) => log.message)
+                  .join('\n');
               Clipboard.setData(ClipboardData(text: logMessages));
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Logs copied to clipboard')),
@@ -228,30 +234,34 @@ class _ExpandableLogGroupState extends State<ExpandableLogGroup> {
             },
           ),
           children: _isExpanded
-              ? widget.logs.map((log) {
-                  return Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        side: BorderSide(color: color),
-                      ),
-                      title: Text(log.message),
-                      subtitle: Text(log.timestamp.toString()),
-                      trailing: IconButton(
-                        icon: Icon(Icons.copy, color: color),
-                        onPressed: () {
-                          Clipboard.setData(ClipboardData(text: log.message));
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Log copied to clipboard'),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  );
-                }).toList(growable: false)
+              ? widget.logs
+                    .map((log) {
+                      return Padding(
+                        padding: const .all(16),
+                        child: ListTile(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: .circular(8.0),
+                            side: BorderSide(color: color),
+                          ),
+                          title: Text(log.message),
+                          subtitle: Text(log.timestamp.toString()),
+                          trailing: IconButton(
+                            icon: Icon(Icons.copy, color: color),
+                            onPressed: () {
+                              Clipboard.setData(
+                                ClipboardData(text: log.message),
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Log copied to clipboard'),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      );
+                    })
+                    .toList(growable: false)
               : [],
           onExpansionChanged: (expanded) {
             setState(() {
@@ -288,7 +298,7 @@ class LogAnalyticsWidget extends StatelessWidget {
     }).toList();
 
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const .all(16.0),
       child: PieChart(
         PieChartData(
           sections: pieChartSections,
@@ -311,7 +321,10 @@ class LogTabView extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Logs and Analytics'),
           bottom: const TabBar(
-            tabs: [Tab(text: 'Logs'), Tab(text: 'Analytics')],
+            tabs: [
+              Tab(text: 'Logs'),
+              Tab(text: 'Analytics'),
+            ],
           ),
         ),
         body: const TabBarView(

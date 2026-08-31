@@ -13,6 +13,10 @@ analyzer:
     - test/.test_coverage.dart
     - lib/generated_plugin_registrant.dart
     - lib/firebase_options.dart
+    - android/**
+    - ios/**
+    - web/**
+    - macos/**
 
   language:
     strict-casts: true
@@ -26,8 +30,6 @@ analyzer:
     missing_required_param: error
     missing_return: error
     use_setters_to_change_properties: ignore
-
-  plugins:
 
 linter:
   rules:

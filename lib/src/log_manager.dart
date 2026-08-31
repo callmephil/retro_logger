@@ -23,7 +23,7 @@ class LogManager {
   /// A list to store all log entries.
   final List<Log> _logs = [];
 
-  List<Log> get logs => List.unmodifiable(_logs);
+  List<Log> get logs => .unmodifiable(_logs);
 
   /// A [ValueNotifier] to notify listeners of filtered log entries.
   final ValueNotifier<List<Log>> _filteredLogsNotifier = ValueNotifier([]);
@@ -82,16 +82,19 @@ class LogManager {
 
     if (_currentSearchQuery.isNotEmpty) {
       final searchWords = _currentSearchQuery.toLowerCase().split(' ');
-      filteredLogs = filteredLogs.where((log) {
-        final logFields = [
-          log.message.toLowerCase(),
-          log.level.toLowerCase(),
-          log.name.toLowerCase(),
-          log.type.name.toLowerCase(),
-        ];
-        return searchWords
-            .any((word) => logFields.any((field) => field.contains(word)));
-      }).toList(growable: false);
+      filteredLogs = filteredLogs
+          .where((log) {
+            final logFields = [
+              log.message.toLowerCase(),
+              log.level.toLowerCase(),
+              log.name.toLowerCase(),
+              log.type.name.toLowerCase(),
+            ];
+            return searchWords.any(
+              (word) => logFields.any((field) => field.contains(word)),
+            );
+          })
+          .toList(growable: false);
     }
 
     _filteredLogsNotifier.value = List.unmodifiable(filteredLogs);

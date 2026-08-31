@@ -16,7 +16,7 @@ void main() {
         level: 'info',
         message: 'This is a test log',
         timestamp: DateTime.now(),
-        type: LogType.other,
+        type: .other,
       );
 
       logManager.addLog(log);
@@ -31,14 +31,14 @@ void main() {
         level: 'info',
         message: 'First log',
         timestamp: DateTime.now(),
-        type: LogType.other,
+        type: .other,
       );
       final log2 = Log(
         name: 'test: should retrieve logs',
         level: 'error',
         message: 'Second log',
         timestamp: DateTime.now(),
-        type: LogType.other,
+        type: .other,
       );
 
       logManager.addLog(log1);
@@ -55,7 +55,7 @@ void main() {
         level: 'info',
         message: 'This is a test log',
         timestamp: DateTime.now(),
-        type: LogType.other,
+        type: .other,
       );
 
       logManager.addLog(log);

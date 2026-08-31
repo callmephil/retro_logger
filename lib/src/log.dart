@@ -59,7 +59,7 @@ class Log {
       level: json['level'] as String? ?? 'unknown',
       message: json['message'] as String? ?? '',
       type: LogType.values.firstWhere(
-        (e) => e.toString() == 'LogType.${json['type']}',
+        (e) => e.name == json['type'],
         orElse: () => LogType.other,
       ),
       timestamp: json['timestamp'] != null
@@ -76,14 +76,14 @@ class Log {
       'name': name,
       'level': level,
       'message': message,
-      'type': type.toString(),
+      'type': type.name,
       'timestamp': timestamp.toIso8601String(),
     };
   }
 
   @override
   String toString() {
-    return 'Log(name: $name, level: $level, message: $message, type: $type, timestamp: $timestamp)';
+    return 'Log(name: $name, level: $level, message: $message, type: ${type.name}, timestamp: $timestamp)';
   }
 
   @override

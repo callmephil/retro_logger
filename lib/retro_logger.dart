@@ -1,4 +1,4 @@
-library retro_logger;
+library;
 
 export 'src/extensions/logger_time_extension.dart';
 export 'src/log.dart';
