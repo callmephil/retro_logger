@@ -1,6 +1,4 @@
 // ignore_for_file: prefer-single-widget-per-file
-
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:retro_logger/retro_logger.dart';
@@ -274,63 +272,14 @@ class _ExpandableLogGroupState extends State<ExpandableLogGroup> {
   }
 }
 
-class LogAnalyticsWidget extends StatelessWidget {
-  const LogAnalyticsWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final logManager = LogManager.instance;
-    final logs = logManager.logs;
-
-    final logTypeCounts = <LogType, int>{};
-    for (var log in logs) {
-      logTypeCounts[log.type] = (logTypeCounts[log.type] ?? 0) + 1;
-    }
-
-    final pieChartSections = logTypeCounts.entries.map((entry) {
-      final logType = entry.key;
-      final count = entry.value;
-      return PieChartSectionData(
-        value: count.toDouble(),
-        title: '${logType.name} ($count)',
-        color: Logger.getColorByType(logType),
-      );
-    }).toList();
-
-    return Padding(
-      padding: const .all(16.0),
-      child: PieChart(
-        PieChartData(
-          sections: pieChartSections,
-          centerSpaceRadius: 80,
-          sectionsSpace: 4,
-        ),
-      ),
-    );
-  }
-}
-
 class LogTabView extends StatelessWidget {
   const LogTabView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Logs and Analytics'),
-          bottom: const TabBar(
-            tabs: [
-              Tab(text: 'Logs'),
-              Tab(text: 'Analytics'),
-            ],
-          ),
-        ),
-        body: const TabBarView(
-          children: [LogListWidget(), LogAnalyticsWidget()],
-        ),
-      ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Logs')),
+      body: LogListWidget(),
     );
   }
 }
